@@ -7,6 +7,7 @@
 ![GitHub forks](https://img.shields.io/github/forks/sebastianobasile/ips)
 
 **IPS** è un generatore di documenti ufficiali per l'**Individuazione del Personale Scolastico** a tempo determinato da graduatoria d'istituto per la segreteria che si occupa di assunzioni del personale.
+
 Funziona come **singolo file HTML** — nessuna installazione, nessun server, nessun database. Si apre direttamente nel browser.
 
 Sviluppato da **Sebastiano Basile** — [superscuola.com](https://www.superscuola.com)

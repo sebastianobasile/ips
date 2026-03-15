@@ -1,4 +1,4 @@
-# 📄 Titanium IPS — Individuazione Personale Scolastico
+# 📄 IPS — Individuazione Personale Scolastico
 
 ![Version](https://img.shields.io/badge/Versione-4.8-orange)
 ![License](https://img.shields.io/badge/Licenza-CC%20BY--NC--SA%204.0-blue)
@@ -6,7 +6,7 @@
 ![GitHub stars](https://img.shields.io/github/stars/sebastianobasile/ips)
 ![GitHub forks](https://img.shields.io/github/forks/sebastianobasile/ips)
 
-**Titanium IPS** è un generatore di documenti ufficiali per l'**Individuazione del Personale Scolastico** a tempo determinato da graduatoria d'istituto. Funziona come **singolo file HTML** — nessuna installazione, nessun server, nessun database. Si apre direttamente nel browser.
+**IPS** è un generatore di documenti ufficiali per l'**Individuazione del Personale Scolastico** a tempo determinato da graduatoria d'istituto per la segreteria che si occupa di assunzioni del personale. Funziona come **singolo file HTML** — nessuna installazione, nessun server, nessun database. Si apre direttamente nel browser.
 
 Sviluppato da **Sebastiano Basile** — [superscuola.com](https://www.superscuola.com)
 per il [3° I.C. Capuana-de Amicis](https://www.3iccapuana.edu.it), Avola (SR).

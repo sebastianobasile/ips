@@ -11,6 +11,8 @@
 Sviluppato da **Sebastiano Basile** — [superscuola.com](https://www.superscuola.com)
 per il [3° I.C. Capuana-de Amicis](https://www.3iccapuana.edu.it), Avola (SR).
 
+[![Contributo volontario](https://img.shields.io/badge/Offrimi_un_caffè_☕-PayPal-blue)](https://paypal.me/superscuola)
+
 ---
 
 ## ✨ Funzionalità principali

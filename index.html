@@ -59,6 +59,7 @@
             cursor: help;
             margin-left: 5px;
         }
+        .no-pdf { display: none !important; }
     </style>
 </head>
 <body>
@@ -197,9 +198,13 @@
                 </div>
 
                 <div class="legal-footer">
-                    <b>Il presente è stralcio conforme all’originale del contratto agli atti di questo Istituto</b><br>
-                    Mod. IPS - Individuazione Personale scolastico - v. 4.8 – Autore: Seb.no BASILE - superscuola.com – Free License: CC (BY-NC-SA)
-                </div>
+    <b>Il presente è stralcio conforme all'originale del contratto agli atti di questo Istituto</b><br>
+    <span class="no-pdf">
+    Mod. IPS - Individuazione Personale scolastico - v. 4.8 – Autore: Seb.no BASILE - superscuola.com
+    &nbsp;·&nbsp; <a href="https://github.com/sebastianobasile/ips" target="_blank" style="color:#444; text-decoration:none;">GitHub</a>
+    &nbsp;·&nbsp; <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.it" target="_blank" style="color:#444; text-decoration:none;">CC BY-NC-SA 4.0</a>
+    </span>
+</div>
             </div>
         </div>
     </div>
@@ -318,13 +323,16 @@
         const dataFormattata = dataDocRaw ? dataDocRaw.split('-').reverse().join('-') : "00-00-0000";
         const fileName = `individuazione_${nomeSoggetto}_${dataFormattata}.pdf`;
 
+        document.querySelectorAll('.no-pdf').forEach(el => el.style.display = 'none');
         html2pdf().from(element).set({
             margin: 0,
             filename: fileName,
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2, logging: false, useCORS: true },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).save();
+        }).save().then(() => {
+            document.querySelectorAll('.no-pdf').forEach(el => el.style.display = '');
+        });
     }
 </script>
 </body>

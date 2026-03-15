@@ -127,4 +127,5 @@ Per modifiche al codice, aprire una **Pull Request**.
 **Sebastiano Basile**
 [superscuola.com](https://www.superscuola.com) · 3° I.C. Capuana-de Amicis — Avola (SR)
 🌐 [www.3iccapuana.edu.it](https://www.3iccapuana.edu.it)
+
 [![Contributo volontario](https://img.shields.io/badge/Offrimi_un_caffè_☕-PayPal-blue)](https://paypal.me/superscuola)

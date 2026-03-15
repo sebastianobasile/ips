@@ -23,7 +23,7 @@ Se ti piace questo strumento [![Contributo volontario](https://img.shields.io/ba
 |---|---|
 | 🆙 Individuazione Personale Scolastico | <a href="https://capuanadeamicis.it/ips">Visita e utilizza online</a> |
  
-> L'installazione reale è presso un dominio dell'I.C. Capuana-De Amicis di Avola (SR). L'accesso e il suo utilizzo è libero perqualsiasi istituto.
+> L'installazione reale è presso un dominio dell'I.C. Capuana-De Amicis di Avola (SR). L'accesso e il suo utilizzo è libero.
 
 ## ✨ Funzionalità principali
 

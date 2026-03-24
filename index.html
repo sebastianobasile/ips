@@ -6,58 +6,98 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        /* --- BLOCCO CONFIGURAZIONE (Supporta HTML) --- */
-        :root {
-            --nome-scuola: "3° ISTITUTO COMPRENSIVO CAPUANA-DE AMICIS DI AVOLA";
-            --sottotitolo-scuola: "<b>Scuola dell'Infanzia - Scuola Primaria - Scuola Secondaria di primo grado ad indirizzo musicale</b><br>Viale C. Santuccio - 96012 Avola (SR) Tel. 0931.318330 - www.3iccapuana.edu.it";
-            --titolo-doc: "INDIVIDUAZIONE PERSONALE SCOLASTICO";
-            --sub-titolo-doc: "per contratto a tempo determinato da graduatoria d'istituto";
-            --ds-nome: "Prof. Giuseppe <b>CANINO</b>";
-            --ds-firma: "Firma autografa sostituita a mezzo stampa<br>ai sensi dell'art. 3comma 2 D.lgs. n. 39/93";
-            --font-size: 11.5pt;
-        }
+        :root { --font-size: 11.5pt; }
 
         body { background-color: #525659; margin: 0; padding: 0; }
         .sidebar { background: #f0f8ff; height: 100vh; overflow-y: auto; padding: 15px; border-right: 2px solid #007bff; font-size: 0.85rem; }
         .bg-azzurro { background-color: #007bff !important; color: white; padding: 5px 10px; margin-top: 10px; border-radius: 4px; }
         .preview-area { height: 100vh; overflow-y: auto; padding: 10px; display: flex; justify-content: center; }
-        
+
+        /* ---- Pannello collassabile Istituto ---- */
+        details.panel-istituto { margin-top: 0; }
+        details.panel-istituto > summary {
+            background-color: #1a5fa8;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            user-select: none;
+        }
+        details.panel-istituto > summary::-webkit-details-marker { display: none; }
+        details.panel-istituto > summary .arrow {
+            font-size: 0.7rem;
+            transition: transform 0.2s;
+        }
+        details.panel-istituto[open] > summary .arrow { transform: rotate(180deg); }
+        details.panel-istituto > .panel-body {
+            border: 1px solid #1a5fa8;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            padding: 8px;
+            background: #eaf3ff;
+        }
+        .badge-saved {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            font-size: 0.68rem;
+            padding: 1px 6px;
+            border-radius: 10px;
+            margin-left: 6px;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .badge-saved.show { opacity: 1; }
+
         #doc-pdf {
             width: 210mm; height: 296mm; padding: 10mm 18mm;
-            background: white; font-family: "Times New Roman", Times, serif; 
+            background: white; font-family: "Times New Roman", Times, serif;
             font-size: var(--font-size); color: black; line-height: 1.6;
             box-sizing: border-box; display: flex; flex-direction: column;
         }
 
         .header-scuola { text-align: center; font-weight: bold; margin-bottom: 2px; line-height: 1.2; }
+        .header-sub    { text-align: center; line-height: 1.2; }
         .title-block { text-align: center; margin: 15px 0; border-bottom: 1.5px solid black; padding-bottom: 8px; line-height: 1.2; }
-        
+
         .dynamic-field { font-weight: bold; padding: 0 2px; }
         .prot-line { border-bottom: 1px solid #000; min-width: 150px; display: inline-block; font-weight: bold; }
-        
-        .red-text { color: #d93025; font-weight: bold; }
+
+        .red-text   { color: #d93025; font-weight: bold; }
         .green-date { color: #28a745; font-weight: bold; }
-        .red-date { color: #d93025; font-weight: bold; }
-        
+        .red-date   { color: #d93025; font-weight: bold; }
+
         .ds-block { margin-top: 30px; text-align: center; align-self: flex-end; width: 350px; line-height: 1.3; }
+        .firma-line {
+            border-top: 1px solid #000;
+            margin-top: 28px;
+            padding-top: 4px;
+            font-size: 8pt;
+            font-style: italic;
+            width: 220px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .firma-sostitutiva { font-size: 8pt; font-style: italic; margin-top: 6px; }
+
         .legal-footer { margin-top: auto; font-size: 8pt; border-top: 1px solid #eee; padding-top: 8px; text-align: center; color: #444; line-height: 1.2; }
-        
         .dest-block { margin-top: 35px; margin-bottom: 45px; text-align: right; line-height: 1.4; }
 
-        /* Stile per l'icona info e tooltip */
         .info-icon {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 14px;
-            font-size: 10px;
-            font-weight: bold;
-            cursor: help;
-            margin-left: 5px;
+            display: inline-block; width: 14px; height: 14px;
+            background-color: #007bff; color: white; border-radius: 50%;
+            text-align: center; line-height: 14px; font-size: 10px;
+            font-weight: bold; cursor: help; margin-left: 5px;
+        }
+
+        @media print {
+            .sidebar, .preview-area { height: auto; overflow: visible; }
         }
     </style>
 </head>
@@ -66,10 +106,72 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4 sidebar">
+
+            <!-- =====================================================
+                 1. IMPOSTAZIONI ISTITUTO (pannello a scomparsa)
+                 Compilare una sola volta: si chiude automaticamente
+                 ===================================================== -->
+            <details class="panel-istituto" id="panel_istituto">
+                <summary>
+                    ⚙ IMPOSTAZIONI ISTITUTO
+                    <span class="badge-saved" id="badge_saved">✓ salvato</span>
+                    <span class="arrow">▼</span>
+                </summary>
+                <div class="panel-body">
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <label class="form-label mb-0">Nome Istituto <small class="text-muted">(riga 1 — grassetto)</small></label>
+                            <input type="text" id="in_scuola_r1" class="form-control form-control-sm"
+                                   value="3° ISTITUTO COMPRENSIVO CAPUANA-DE AMICIS DI AVOLA"
+                                   oninput="syncIstituto()">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label mb-0">Sottotitolo / Indirizzo <small class="text-muted">(riga 2)</small></label>
+                            <input type="text" id="in_scuola_r2" class="form-control form-control-sm"
+                                   value="Scuola dell'Infanzia - Scuola Primaria - Scuola Secondaria di primo grado ad indirizzo musicale"
+                                   oninput="syncIstituto()">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label mb-0">Riga 3 <small class="text-muted">(opzionale)</small></label>
+                            <input type="text" id="in_scuola_r3" class="form-control form-control-sm"
+                                   value="Viale C. Santuccio - 96012 Avola (SR) Tel. 0931.318330 - www.3iccapuana.edu.it"
+                                   oninput="syncIstituto()">
+                        </div>
+                        <div class="col-5">
+                            <!-- 2. Luogo per la data dinamico -->
+                            <label class="form-label mb-0">Luogo data</label>
+                            <input type="text" id="in_luogo" class="form-control form-control-sm"
+                                   value="Avola" oninput="syncIstituto()">
+                        </div>
+                        <div class="col-7">
+                            <!-- 3. Nome Dirigente Scolastico dinamico -->
+                            <label class="form-label mb-0">Nome Dirigente Scolastico</label>
+                            <input type="text" id="in_ds_nome" class="form-control form-control-sm"
+                                   value="Prof. Giuseppe CANINO" oninput="syncIstituto()">
+                        </div>
+                        <div class="col-12">
+                            <!-- 4. Tipo firma DS -->
+                            <label class="form-label mb-0">Tipo di firma DS
+                                <span class="info-icon" title="Autografa e Digitale: stampano una linea per firmare a mano. Sostitutiva: aggiunge la dicitura legale 'ai sensi art. 3 comma 2 D.lgs. n. 39/93'.">?</span>
+                            </label>
+                            <select id="in_firma_tipo" class="form-select form-select-sm" onchange="syncIstituto()">
+                                <option value="sostitutiva">Sostitutiva a mezzo stampa (art. 3 c.2 D.lgs. 39/93)</option>
+                                <option value="autografa">Autografa (linea per firma a penna)</option>
+                                <option value="digitale">Digitale (linea per firma a penna)</option>
+                            </select>
+                        </div>
+                        <div class="col-12 text-end">
+                            <small class="text-muted">Le impostazioni si salvano automaticamente nel browser.</small>
+                        </div>
+                    </div>
+                </div>
+            </details>
+            <!-- fine pannello istituto -->
+
             <div class="bg-azzurro small fw-bold">DATI GENERALI E PROTOCOLLI</div>
             <div class="row g-2 p-2">
                 <div class="col-6">
-                    <label>Data Generale 
+                    <label>Data Generale
                         <span class="info-icon" title="Inserendo questa data, verrà applicata automaticamente anche alla Data di Convocazione e alla Data di Assunzione, a meno che non decidi di personalizzarle singolarmente scegliendo date diverse dai rispettivi calendari.">?</span>
                     </label>
                     <input type="date" id="in_data_doc" class="form-control form-control-sm" oninput="sync()">
@@ -117,47 +219,57 @@
 
             <div class="bg-azzurro small fw-bold">GRADUATORIA E DATE</div>
             <div class="row g-2 p-2">
-                <div class="col-6"><label>Fascia</label>
-                    <select id="in_grad" class="form-select form-select-sm" onchange="sync()">
+                <div class="col-12"><label>Fascia</label>
+                    <select id="in_grad" class="form-select form-select-sm" onchange="toggleAltroFascia(); sync()">
                         <option value="Seleziona">Seleziona...</option>
                         <option value="1ª fascia d'Istituto">1ª fascia d'Istituto</option>
                         <option value="2ª fascia d'Istituto">2ª fascia d'Istituto</option>
                         <option value="3ª fascia d'Istituto">3ª fascia d'Istituto</option>
                         <option value="Interpello">Interpello</option>
+                        <option value="__altro__">Altro (personalizza)…</option>
                     </select>
                 </div>
-                <div class="col-3"><label>Pos. in graduatoria</label><input type="text" id="in_pos" class="form-control form-control-sm" oninput="sync()"></div>
+                <div class="col-12" id="wrap_grad_altro" style="display:none;">
+                    <input type="text" id="in_grad_altro" class="form-control form-control-sm"
+                           placeholder="Scrivi la fascia / tipo graduatoria…" oninput="sync()">
+                </div>
+                <div class="col-5"><label>Pos. in graduatoria</label><input type="text" id="in_pos" class="form-control form-control-sm" oninput="sync()"></div>
                 <div class="col-3"><label>Punti</label><input type="text" id="in_punti" class="form-control form-control-sm" oninput="sync()"></div>
                 <div class="col-4"><label>Ore settimanali</label><input type="text" id="in_ore" class="form-control form-control-sm" oninput="sync()"></div>
-                <div class="col-4"><label>Inizio supplenza</label><input type="date" id="in_inizio" class="form-control form-control-sm" oninput="sync()"></div>
-                <div class="col-4"><label>Fine supplenza</label><input type="date" id="in_fine" class="form-control form-control-sm" oninput="sync()"></div>
+                <div class="col-6"><label>Inizio supplenza</label><input type="date" id="in_inizio" class="form-control form-control-sm" oninput="sync()"></div>
+                <div class="col-6"><label>Fine supplenza</label><input type="date" id="in_fine" class="form-control form-control-sm" oninput="sync()"></div>
                 <div class="col-12"><label>ASS. Amm. responsabile della gestione della pratica:</label><input type="text" id="in_resp" class="form-control form-control-sm" oninput="sync()"></div>
                 <div class="col-12"><label>Altre Note</label><textarea id="in_note" class="form-control form-control-sm" rows="2" oninput="sync()"></textarea></div>
             </div>
 
             <button class="btn btn-success w-100 my-2 fw-bold" onclick="exportPDF()">SCARICA PDF (A4)</button>
-            <button class="btn btn-outline-danger btn-sm w-100" onclick="resetForm()">PULISCI CAMPI</button>
+            <button class="btn btn-outline-danger btn-sm w-100" onclick="resetForm()">PULISCI CAMPI PERSONALE</button>
             <div style="margin-top:14px; font-size:0.72rem; color:#6c757d; text-align:center; line-height:1.6;">
-                Mod. IPS - v. 4.8 – Autore: Seb.no BASILE - superscuola.com<br>
-                <a href="https://github.com/sebastianobasile/ips" target="_blank" style="color:#6c757d;">GitHub</a>
+                Mod. IPS - v. 5.0 – Autore: Seb.no BASILE - superscuola.com<br>
+                <a href="https://github.com/sebastianobasile?tab=repositories" target="_blank" style="color:#6c757d;">Progetto su GitHub</a>
                 &nbsp;·&nbsp;
                 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.it" target="_blank" style="color:#6c757d;">CC BY-NC-SA 4.0</a>
             </div>
         </div>
 
+        <!-- ======================== DOCUMENTO PDF ======================== -->
         <div class="col-md-8 preview-area">
             <div id="doc-pdf">
-                <div class="header-scuola" id="cfg_scuola"></div>
-                <div class="text-center" id="cfg_sottoscuola"></div>
+
+                <!-- Intestazione istituto (3 righe dinamiche) -->
+                <div class="header-scuola" id="cfg_scuola_r1"></div>
+                <div class="header-sub"    id="cfg_scuola_r2"></div>
+                <div class="header-sub"    id="cfg_scuola_r3" style="display:none;"></div>
 
                 <div class="title-block">
-                    <div style="font-size: 17pt; font-weight: bold;" id="cfg_titolo"></div>
-                    <div style="font-size: 11pt; font-style: italic;" id="cfg_subtitolo"></div>
+                    <div style="font-size: 17pt; font-weight: bold;">INDIVIDUAZIONE PERSONALE SCOLASTICO</div>
+                    <div style="font-size: 11pt; font-style: italic;">per contratto a tempo determinato da graduatoria d'istituto</div>
                 </div>
 
                 <div class="d-flex justify-content-between mt-1">
                     <div>Prot. n. <span class="prot-line" id="out_prot_gen"></span></div>
-                    <div>Avola, <span class="dynamic-field" id="out_data_top"></span></div>
+                    <!-- 2. Luogo dinamico -->
+                    <div><span id="out_luogo">Avola</span>, <span class="dynamic-field" id="out_data_top"></span></div>
                 </div>
 
                 <div class="dest-block">
@@ -179,10 +291,10 @@
                 <div class="text-center fw-bold my-2">INDIVIDUA</div>
 
                 <p style="text-align: justify; margin-bottom: 15px;">
-                    <span id="out_art_il">La</span> <span id="out_sigra_main">sig.ra</span> <span class="red-text" id="out_nome_main"></span> 
-                    <span id="out_nato_a">nata</span> il <span class="dynamic-field" id="out_nascita"></span> <span id="out_inserita_a">inserita</span> al posto <span class="dynamic-field" id="out_pos"></span> 
-                    con punti <span class="dynamic-field" id="out_punti"></span> nella graduatoria di <span class="dynamic-field" id="out_grad"></span>, 
-                    quale <span id="out_destinatario">destinataria</span> del contratto per una supplenza di num. <span class="dynamic-field" id="out_ore"></span> 
+                    <span id="out_art_il">La</span> <span id="out_sigra_main">sig.ra</span> <span class="red-text" id="out_nome_main"></span>
+                    <span id="out_nato_a">nata</span> il <span class="dynamic-field" id="out_nascita"></span> <span id="out_inserita_a">inserita</span> al posto <span class="dynamic-field" id="out_pos"></span>
+                    con punti <span class="dynamic-field" id="out_punti"></span> nella graduatoria di <span class="dynamic-field" id="out_grad"></span>,
+                    quale <span id="out_destinatario">destinataria</span> del contratto per una supplenza di num. <span class="dynamic-field" id="out_ore"></span>
                     ore settimanali <span id="out_label_qualita">per l'ordine di</span> <b id="out_qualifica_ordine"></b> - <span class="dynamic-field" id="out_classe"></span>.
                 </p>
 
@@ -196,137 +308,222 @@
                     <div class="text-end mt-1" style="font-size: 8.5pt;">Ass. Amm.: <span id="out_resp"></span></div>
                 </div>
 
+                <!-- 3+4. Blocco DS: nome dinamico + firma condizionale -->
                 <div class="ds-block">
                     <div class="fw-bold">IL DIRIGENTE SCOLASTICO</div>
                     <div id="cfg_ds_nome"></div>
-                    <div style="font-size: 8pt; font-style: italic;" id="cfg_ds_firma"></div>
+                    <!-- contenuto cambia in base al tipo firma -->
+                    <div id="cfg_ds_firma_block"></div>
                 </div>
 
                 <div class="legal-footer">
-    <b>Mod. IPS – Il presente è stralcio conforme all'originale del contratto agli atti di questo Istituto</b>
-</div>
+                    <b>Il presente è stralcio conforme all'originale del contratto agli atti di questo Istituto – v5 · Mod. IPS · S.B.</b>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function cleanCSSVar(val) {
-        return val.trim().replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
+    /* ----------------------------------------------------------------
+       ISTITUTO — sincronizza i campi della testata e del DS
+    ---------------------------------------------------------------- */
+    function syncIstituto() {
+        const r1 = document.getElementById('in_scuola_r1').value.trim();
+        const r2 = document.getElementById('in_scuola_r2').value.trim();
+        const r3 = document.getElementById('in_scuola_r3').value.trim();
+        const luogo = document.getElementById('in_luogo').value.trim();
+        const dsNome = document.getElementById('in_ds_nome').value.trim();
+        const firmaTipo = document.getElementById('in_firma_tipo').value;
+
+        // Riga 1 — grassetto
+        document.getElementById('cfg_scuola_r1').textContent = r1;
+
+        // Riga 2
+        document.getElementById('cfg_scuola_r2').textContent = r2;
+
+        // Riga 3 — visibile solo se compilata
+        const r3el = document.getElementById('cfg_scuola_r3');
+        if (r3) {
+            r3el.textContent = r3;
+            r3el.style.display = '';
+        } else {
+            r3el.style.display = 'none';
+        }
+
+        // Luogo data
+        document.getElementById('out_luogo').textContent = luogo || 'Avola';
+
+        // Nome DS
+        document.getElementById('cfg_ds_nome').innerHTML = dsNome
+            ? `<b>${dsNome}</b>`
+            : '';
+
+        // Blocco firma DS
+        const firmaBlock = document.getElementById('cfg_ds_firma_block');
+        if (firmaTipo === 'sostitutiva') {
+            firmaBlock.innerHTML =
+                '<div class="firma-sostitutiva">Firma autografa sostituita a mezzo stampa<br>' +
+                'ai sensi dell\'art. 3 comma 2 D.lgs. n. 39/93</div>';
+        } else {
+            // autografa o digitale → linea per firma a penna
+            const etichetta = firmaTipo === 'digitale' ? 'Firma digitale' : 'Firma autografa';
+            firmaBlock.innerHTML =
+                '<div class="firma-line">' + etichetta + '</div>';
+        }
+
+        // Salvataggio localStorage istituto
+        const istitutoIds = ['in_scuola_r1','in_scuola_r2','in_scuola_r3','in_luogo','in_ds_nome','in_firma_tipo'];
+        istitutoIds.forEach(id => localStorage.setItem(id, document.getElementById(id).value));
+
+        // Badge "✓ salvato"
+        const badge = document.getElementById('badge_saved');
+        badge.classList.add('show');
+        setTimeout(() => badge.classList.remove('show'), 1800);
     }
 
-    const cfg = {
-        scuola: cleanCSSVar(getComputedStyle(document.documentElement).getPropertyValue('--nome-scuola')),
-        sottoscuola: cleanCSSVar(getComputedStyle(document.documentElement).getPropertyValue('--sottotitolo-scuola')),
-        titolo: cleanCSSVar(getComputedStyle(document.documentElement).getPropertyValue('--titolo-doc')),
-        sub: cleanCSSVar(getComputedStyle(document.documentElement).getPropertyValue('--sub-titolo-doc')),
-        ds: cleanCSSVar(getComputedStyle(document.documentElement).getPropertyValue('--ds-nome')),
-        firma: cleanCSSVar(getComputedStyle(document.documentElement).getPropertyValue('--ds-firma'))
-    };
+    /* ----------------------------------------------------------------
+       FASCIA "Altro (personalizza)" — mostra/nasconde il campo testo
+    ---------------------------------------------------------------- */
+    function toggleAltroFascia() {
+        const isAltro = document.getElementById('in_grad').value === '__altro__';
+        document.getElementById('wrap_grad_altro').style.display = isAltro ? '' : 'none';
+        if (isAltro) document.getElementById('in_grad_altro').focus();
+    }
 
-    function fmtDate(s) { if(!s) return "________"; const d = s.split('-'); return `${d[2]}/${d[1]}/${d[0]}`; }
+    /* ----------------------------------------------------------------
+       DOCUMENTO — sincronizza i campi del documento
+    ---------------------------------------------------------------- */
+    function fmtDate(s) {
+        if (!s) return "________";
+        const d = s.split('-');
+        return `${d[2]}/${d[1]}/${d[0]}`;
+    }
 
     function sync() {
-        const s = document.getElementById('in_sesso').value;
-        const n = document.getElementById('in_nome').value.toUpperCase();
-        const d = document.getElementById('in_data_doc').value;
-        const d_conv = document.getElementById('in_data_conv').value;
-        const d_acc = document.getElementById('in_data_acc').value;
+        const s       = document.getElementById('in_sesso').value;
+        const n       = document.getElementById('in_nome').value.toUpperCase();
+        const d       = document.getElementById('in_data_doc').value;
+        const d_conv  = document.getElementById('in_data_conv').value;
+        const d_acc   = document.getElementById('in_data_acc').value;
         const tipoPers = document.getElementById('in_tipo_pers').value;
 
-        document.getElementById('cfg_scuola').innerHTML = cfg.scuola;
-        document.getElementById('cfg_sottoscuola').innerHTML = cfg.sottoscuola;
-        document.getElementById('cfg_titolo').innerHTML = cfg.titolo;
-        document.getElementById('cfg_subtitolo').innerHTML = cfg.sub;
-        document.getElementById('cfg_ds_nome').innerHTML = cfg.ds;
-        document.getElementById('cfg_ds_firma').innerHTML = cfg.firma;
+        document.getElementById('out_appello').innerText     = s === 'M' ? 'Al Sig.' : 'Alla Sig.ra';
+        document.getElementById('out_del_sig').innerText     = s === 'M' ? 'del sig.' : 'della sig.ra';
+        document.getElementById('out_art_il').innerText      = s === 'M' ? 'Il' : 'La';
+        document.getElementById('out_sigra_main').innerText  = s === 'M' ? 'sig.' : 'sig.ra';
+        document.getElementById('out_nato_a').innerText      = s === 'M' ? 'nato' : 'nata';
+        document.getElementById('out_inserita_a').innerText  = s === 'M' ? 'inserito' : 'inserita';
+        document.getElementById('out_destinatario').innerText= s === 'M' ? 'destinatario' : 'destinataria';
 
-        document.getElementById('out_appello').innerText = s === 'M' ? 'Al Sig.' : 'Alla Sig.ra';
-        document.getElementById('out_del_sig').innerText = s === 'M' ? 'del sig.' : 'della sig.ra';
-        document.getElementById('out_art_il').innerText = s === 'M' ? 'Il' : 'La';
-        document.getElementById('out_sigra_main').innerText = s === 'M' ? 'sig.' : 'sig.ra';
-        document.getElementById('out_nato_a').innerText = s === 'M' ? 'nato' : 'nata';
-        document.getElementById('out_inserita_a').innerText = s === 'M' ? 'inserito' : 'inserita';
-        document.getElementById('out_destinatario').innerText = s === 'M' ? 'destinatario' : 'destinataria';
-
-        if(tipoPers.includes("ATA")) {
-            document.getElementById('out_label_qualita').innerText = "in qualità di";
+        if (tipoPers.includes("ATA")) {
+            document.getElementById('out_label_qualita').innerText   = "in qualità di";
             document.getElementById('out_qualifica_ordine').innerText = tipoPers;
         } else {
-            document.getElementById('out_label_qualita').innerText = "per l'ordine di";
+            document.getElementById('out_label_qualita').innerText   = "per l'ordine di";
             document.getElementById('out_qualifica_ordine').innerText = document.getElementById('in_ordine').value;
         }
 
-        document.getElementById('out_nome_top').innerText = n;
-        document.getElementById('out_nome_acc').innerText = n;
+        document.getElementById('out_nome_top').innerText  = n;
+        document.getElementById('out_nome_acc').innerText  = n;
         document.getElementById('out_nome_main').innerText = n;
-        document.getElementById('out_data_top').innerText = fmtDate(d);
-        
-        // Se la data specifica non è inserita, usa quella del documento come fallback
+        document.getElementById('out_data_top').innerText  = fmtDate(d);
+
         document.getElementById('out_data_conv').innerText = d_conv ? fmtDate(d_conv) : fmtDate(d);
-        document.getElementById('out_data_acc').innerText = d_acc ? fmtDate(d_acc) : fmtDate(d);
-        
-        document.getElementById('out_nascita').innerText = fmtDate(document.getElementById('in_nascita').value);
-        document.getElementById('out_prot_gen').innerText = document.getElementById('in_prot_gen').value;
-        document.getElementById('out_prot_acc').innerText = document.getElementById('in_prot_acc').value;
+        document.getElementById('out_data_acc').innerText  = d_acc  ? fmtDate(d_acc)  : fmtDate(d);
+
+        document.getElementById('out_nascita').innerText   = fmtDate(document.getElementById('in_nascita').value);
+        document.getElementById('out_prot_gen').innerText  = document.getElementById('in_prot_gen').value;
+        document.getElementById('out_prot_acc').innerText  = document.getElementById('in_prot_acc').value;
         document.getElementById('out_prot_conv').innerText = document.getElementById('in_prot_conv').value;
         document.getElementById('out_tipo_pers_v').innerText = tipoPers;
-        document.getElementById('out_classe').innerText = document.getElementById('in_classe').value.toUpperCase();
-        document.getElementById('out_grad').innerText = document.getElementById('in_grad').value;
-        document.getElementById('out_pos').innerText = document.getElementById('in_pos').value;
-        document.getElementById('out_punti').innerText = document.getElementById('in_punti').value;
-        document.getElementById('out_ore').innerText = document.getElementById('in_ore').value;
-        document.getElementById('out_inizio').innerText = fmtDate(document.getElementById('in_inizio').value);
-        document.getElementById('out_fine').innerText = fmtDate(document.getElementById('in_fine').value);
-        document.getElementById('out_note').innerText = document.getElementById('in_note').value;
-        document.getElementById('out_resp').innerText = document.getElementById('in_resp').value;
+        document.getElementById('out_classe').innerText    = document.getElementById('in_classe').value.toUpperCase();
+        const gradVal = document.getElementById('in_grad').value;
+        document.getElementById('out_grad').innerText =
+            gradVal === '__altro__'
+                ? (document.getElementById('in_grad_altro').value || '________')
+                : gradVal;
+        document.getElementById('out_pos').innerText       = document.getElementById('in_pos').value;
+        document.getElementById('out_punti').innerText     = document.getElementById('in_punti').value;
+        document.getElementById('out_ore').innerText       = document.getElementById('in_ore').value;
+        document.getElementById('out_inizio').innerText    = fmtDate(document.getElementById('in_inizio').value);
+        document.getElementById('out_fine').innerText      = fmtDate(document.getElementById('in_fine').value);
+        document.getElementById('out_note').innerText      = document.getElementById('in_note').value;
+        document.getElementById('out_resp').innerText      = document.getElementById('in_resp').value;
 
         const i = new Date(document.getElementById('in_inizio').value);
         const f = new Date(document.getElementById('in_fine').value);
-        if(i && f && f >= i) {
-            const diff = Math.ceil((f - i) / (86400000)) + 1;
+        if (i && f && f >= i) {
+            const diff = Math.ceil((f - i) / 86400000) + 1;
             document.getElementById('out_giorni').innerText = `La durata totale del contratto è di ${diff} giorni.`;
-        } else { document.getElementById('out_giorni').innerText = ""; }
+        } else {
+            document.getElementById('out_giorni').innerText = "";
+        }
 
-        document.querySelectorAll('input, select, textarea').forEach(el => localStorage.setItem(el.id, el.value));
+        // salva in localStorage tutti i campi documento
+        document.querySelectorAll('input:not([id^="in_scuola"]):not([id="in_luogo"]):not([id="in_ds_nome"]), select:not([id="in_firma_tipo"]), textarea')
+            .forEach(el => localStorage.setItem(el.id, el.value));
     }
 
+    /* ----------------------------------------------------------------
+       RESET — pulisce solo i campi del personale (NON le impostazioni)
+    ---------------------------------------------------------------- */
     function resetForm() {
-        if(confirm("Vuoi pulire i dati del personale individuato?")) {
-            const clear = ['in_data_doc','in_data_conv','in_data_acc','in_nome','in_nascita','in_pos','in_punti','in_ore','in_inizio','in_fine','in_note','in_prot_gen','in_prot_acc','in_prot_conv','in_classe'];
-            clear.forEach(id => { 
-                document.getElementById(id).value = ""; 
-                localStorage.removeItem(id); 
+        if (confirm("Vuoi pulire i dati del personale individuato?\n(Le impostazioni dell'istituto rimangono invariate.)")) {
+            const clear = ['in_data_doc','in_data_conv','in_data_acc','in_nome','in_nascita',
+                           'in_pos','in_punti','in_ore','in_inizio','in_fine','in_note',
+                           'in_prot_gen','in_prot_acc','in_prot_conv','in_classe','in_grad_altro'];
+            clear.forEach(id => {
+                document.getElementById(id).value = "";
+                localStorage.removeItem(id);
             });
-            
-            const selects = ['in_tipo_pers', 'in_ordine', 'in_grad'];
+            const selects = ['in_tipo_pers','in_ordine','in_grad'];
             selects.forEach(id => {
                 document.getElementById(id).selectedIndex = 0;
                 localStorage.setItem(id, document.getElementById(id).value);
             });
-
             sync();
         }
     }
 
+    /* ----------------------------------------------------------------
+       INIT — carica localStorage e aggiorna tutto
+    ---------------------------------------------------------------- */
     window.onload = () => {
+        // Campi documento + istituto: localStorage ha priorità, altrimenti resta il value di default HTML
         document.querySelectorAll('input, select, textarea').forEach(el => {
-            const v = localStorage.getItem(el.id); if(v) el.value = v;
+            const v = localStorage.getItem(el.id);
+            if (v !== null) el.value = v;
         });
+
+        // Apri/chiudi panel istituto: se r1 è già compilato → chiudi
+        const panel = document.getElementById('panel_istituto');
+        const r1val = localStorage.getItem('in_scuola_r1') || '';
+        if (r1val.trim()) {
+            panel.removeAttribute('open');  // già configurato → chiuso
+        } else {
+            panel.setAttribute('open', ''); // prima volta → aperto
+        }
+
+        toggleAltroFascia();
+        syncIstituto();
         sync();
     };
 
+    /* ----------------------------------------------------------------
+       EXPORT PDF
+    ---------------------------------------------------------------- */
     function exportPDF() {
         const element = document.getElementById('doc-pdf');
         const nomeSoggetto = document.getElementById('in_nome').value.replace(/\s+/g, '-').toUpperCase() || "SCONOSCIUTO";
-        const dataDocRaw = document.getElementById('in_data_doc').value;
+        const dataDocRaw   = document.getElementById('in_data_doc').value;
         const dataFormattata = dataDocRaw ? dataDocRaw.split('-').reverse().join('-') : "00-00-0000";
         const fileName = `individuazione_${nomeSoggetto}_${dataFormattata}.pdf`;
 
         html2pdf().from(element).set({
             margin: 0,
             filename: fileName,
-            image: { type: 'jpeg', quality: 0.98 },
+            image:     { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2, logging: false, useCORS: true },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         }).save();

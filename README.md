@@ -10,6 +10,8 @@
 
 Funziona come **singolo file HTML** — nessuna installazione, nessun server, nessun database. Si apre direttamente nel browser.
 
+> **Utilizzo e dimostrativo:** [superscuola.com/ips](https://superscuola.com/ips)
+
 Sviluppato da **Sebastiano Basile** — [superscuola.com](https://www.superscuola.com)
 per il [3° I.C. Capuana-de Amicis](https://www.3iccapuana.edu.it), Avola (SR).
 
